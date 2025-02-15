@@ -6,9 +6,9 @@ from pathlib import Path
 # Get the script's directory
 script_dir = Path(__file__).parent
 # Load the JSON file
-json_path = script_dir.parent / "data/template_ballerina.json"
-images_dir = script_dir.parent / "data/ballerina"
-output_zip = script_dir.parent / "data/training_data.zip"
+json_path = script_dir.parent / "data/template_carton.json"
+images_dir = script_dir.parent / "data/cartoon"
+output_zip = script_dir.parent / "data/training_data_cartoon.zip"
 
 def create_training_zip():
     # Ensure we're working with absolute paths

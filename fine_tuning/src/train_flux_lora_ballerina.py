@@ -1,6 +1,7 @@
 import json
-import replicate
+import os
 from pathlib import Path
+import replicate
 
 def load_config():
     config_path = Path(__file__).parent / "config.json"
@@ -11,26 +12,24 @@ def train_flux_lora():
     # Load configuration
     config = load_config()
     
-    # Set Replicate API token
-    replicate.api_token = config["replicate_api_token"]
+    # Set Replicate API token as environment variable
+    os.environ["REPLICATE_API_TOKEN"] = config["replicate_api_token"]
     
-    # Path to the training data zip
-    training_data_path = Path(__file__).parent.parent / "data/training_data.zip"
+    # Use the raw GitHub URL for the training data
+    training_data_url = "https://raw.githubusercontent.com/Guidosalimbeni/aicaricaturist/main/fine_tuning/data/training_data.zip"
+    print(f"Using training data from: {training_data_url}")
     
-    if not training_data_path.exists():
-        raise FileNotFoundError(f"Training data not found at {training_data_path}")
-    
-    # Create the training
+    # Create the training using the uploaded file URL
     training = replicate.trainings.create(
-        # You'll need to create a model on Replicate first and update this
+        # The destination should be your model on Replicate
         destination="guidosalimbeni/ballerina-flux",
         
-        # Flux trainer model
+        # The Flux trainer model version
         version="ostris/flux-dev-lora-trainer:b6af14222e6bd9be257cbc1ea4afda3cd0503e1133083b9d1de0364d8568e6ef",
         
         input={
             # Required parameters
-            "input_images": str(training_data_path.resolve()),
+            "input_images": training_data_url,
             "trigger_word": "SMKRINA",  # Custom trigger word for the concept
             
             # Training parameters
@@ -63,18 +62,22 @@ def train_flux_lora():
         },
     )
     
-    print(f"Training started! You can monitor it at: {training.url}")
+    # Get the training URL and convert it to web interface URL
+    api_url = training.urls['get']
+    # Convert API URL to web interface URL
+    # From: https://api.replicate.com/v1/predictions/[id]
+    # To:   https://replicate.com/p/[id]
+    training_id = api_url.split('/')[-1]
+    web_url = f"https://replicate.com/p/{training_id}"
     
-    # Wait for training to complete
-    training.wait()
-    
-    if training.status == "succeeded":
-        print(f"Training completed successfully!")
-        print(f"Model version: {training.output}")
-    else:
-        print(f"Training failed with status: {training.status}")
-        if training.error:
-            print(f"Error: {training.error}")
+    print(f"Training started! You can monitor it at: {web_url}")
+    print("\nIMPORTANT: The training will continue on Replicate's servers.")
+    print("Visit the URL above to monitor progress and get the results.")
+    print("\nTraining parameters:")
+    print(f"- Model destination: guidosalimbeni/ballerina-flux")
+    print(f"- Trigger word: SMKRINA")
+    print(f"- Training steps: 1000")
+    print(f"- LoRA rank: 16")
 
 if __name__ == "__main__":
     train_flux_lora()

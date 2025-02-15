@@ -3,7 +3,7 @@ import json
 from pathlib import Path
 
 # Path to the ballerina folder
-images_dir = Path("aicaricaturist/fine_tuning/data/ballerina")
+images_dir = Path("aicaricaturist/fine_tuning/data/cartoon")
 
 # Get all PNG files
 image_files = sorted([f.name for f in images_dir.iterdir() if f.suffix.lower() == '.png'])

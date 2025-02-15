@@ -41,7 +41,7 @@ A configuration file (gitignored) that stores API tokens:
 
 The training script uses the following optimized parameters:
 
-- Trigger word: "BALLERINA"
+- Trigger word: "SMKRINA" (unique word unlikely to appear in training data)
 - Steps: 1000
 - LoRA rank: 16
 - Learning rate: 0.0004
@@ -69,21 +69,29 @@ python train_flux_lora.py
 
 The training script will:
 
-- Upload the training data
-- Start the training process
-- Provide a URL to monitor progress
-- Wait for completion and show results
-- Save the model to HuggingFace (if configured)
+- Use the training data directly from GitHub (https://raw.githubusercontent.com/Guidosalimbeni/aicaricaturist/main/fine_tuning/data/training_data.zip)
+- Start the training process on Replicate's servers
+- Provide a web URL where you can monitor the training progress
+- Display the key training parameters being used
+
+The training will continue on Replicate's servers after the script completes. The script will provide a web URL (https://replicate.com/p/[id]) where you can:
+
+- Monitor the training progress
+- View training logs
+- Get the final model once training is complete
+- Access the model on HuggingFace (if configured)
 
 ## Using the Trained Model
 
-Once training is complete, you can use the trained model in your prompts by including the trigger word "BALLERINA". This will activate the learned style in your generations.
+Once training is complete, you can use the trained model in your prompts by including the trigger word "SMKRINA". This will activate the learned style in your generations.
 
 Example prompt:
 
 ```
-A BALLERINA dancing in a garden
+A SMKRINA dancing in a garden
 ```
+
+Note: We use "SMKRINA" as the trigger word instead of "BALLERINA" because it's important to use a unique word that doesn't appear in the training data captions. This helps the model better associate the trigger word with the specific style being learned.
 
 ## Requirements
 

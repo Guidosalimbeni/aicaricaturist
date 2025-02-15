@@ -1,4 +1,5 @@
 .venv
 .env
 fine_tuning/data/ballerina
+fine_tuning/data/cartoon
 fine_tuning/src/config.json
