@@ -54,7 +54,7 @@ def train_flux_lora():
             
             # HuggingFace integration (if token provided)
             "hf_token": config.get("huggingface_token"),
-            "hf_repo_id": "guidosalimbeni/ballerina-flux-lora",
+            "hf_repo_id": "Guido/ballerina-flux-lora",
             
             # Performance settings
             "cache_latents_to_disk": False,

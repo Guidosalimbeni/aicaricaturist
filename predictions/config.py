@@ -1,0 +1,1 @@
+REPLICATE_API_TOKEN = "33fb8a9e8bcaa47fe78ec57155cdf0dda9bfe883"

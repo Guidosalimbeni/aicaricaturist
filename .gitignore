@@ -3,3 +3,7 @@
 fine_tuning/data/ballerina
 fine_tuning/data/cartoon
 fine_tuning/src/config.json
+.DS_Store
+.DS_Store
+.DS_Store
+predictions/__pycache__/config.cpython-313.pyc

@@ -16,13 +16,13 @@ def train_flux_lora():
     os.environ["REPLICATE_API_TOKEN"] = config["replicate_api_token"]
     
     # Use the raw GitHub URL for the training data
-    training_data_url = "https://raw.githubusercontent.com/Guidosalimbeni/aicaricaturist/main/fine_tuning/data/training_data.zip"
+    training_data_url = "https://raw.githubusercontent.com/Guidosalimbeni/aicaricaturist/main/fine_tuning/data/training_data_cartoon.zip"
     print(f"Using training data from: {training_data_url}")
     
     # Create the training using the uploaded file URL
     training = replicate.trainings.create(
         # The destination should be your model on Replicate
-        destination="guidosalimbeni/ballerina-flux",
+        destination="guidosalimbeni/cartoon-flux",
         
         # The Flux trainer model version
         version="ostris/flux-dev-lora-trainer:b6af14222e6bd9be257cbc1ea4afda3cd0503e1133083b9d1de0364d8568e6ef",
@@ -30,7 +30,7 @@ def train_flux_lora():
         input={
             # Required parameters
             "input_images": training_data_url,
-            "trigger_word": "SMKRINA",  # Custom trigger word for the concept
+            "trigger_word": "CRTFLX01",  # Custom trigger word for the concept
             
             # Training parameters
             "steps": 1000,
@@ -54,7 +54,7 @@ def train_flux_lora():
             
             # HuggingFace integration (if token provided)
             "hf_token": config.get("huggingface_token"),
-            "hf_repo_id": "guidosalimbeni/ballerina-flux-lora",
+            "hf_repo_id": "Guido/cartoon-flux",
             
             # Performance settings
             "cache_latents_to_disk": False,
@@ -74,8 +74,8 @@ def train_flux_lora():
     print("\nIMPORTANT: The training will continue on Replicate's servers.")
     print("Visit the URL above to monitor progress and get the results.")
     print("\nTraining parameters:")
-    print(f"- Model destination: guidosalimbeni/ballerina-flux")
-    print(f"- Trigger word: SMKRINA")
+    print(f"- Model destination: guidosalimbeni/cartoon-flux")
+    print(f"- Trigger word: CRTFLX01")
     print(f"- Training steps: 1000")
     print(f"- LoRA rank: 16")
 
