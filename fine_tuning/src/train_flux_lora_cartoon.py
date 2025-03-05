@@ -22,7 +22,7 @@ def train_flux_lora():
     # Create the training using the uploaded file URL
     training = replicate.trainings.create(
         # The destination should be your model on Replicate
-        destination="guidosalimbeni/cartoon-flux",
+        destination="guidosalimbeni/cartoon-flux-3",
         
         # The Flux trainer model version
         version="ostris/flux-dev-lora-trainer:b6af14222e6bd9be257cbc1ea4afda3cd0503e1133083b9d1de0364d8568e6ef",
@@ -30,14 +30,14 @@ def train_flux_lora():
         input={
             # Required parameters
             "input_images": training_data_url,
-            "trigger_word": "CRTFLX01",  # Custom trigger word for the concept
+            "trigger_word": "CRTFLX03",  # Custom trigger word for the concept
             
             # Training parameters
             "steps": 1000,
-            "lora_rank": 16,
-            "learning_rate": 0.0004,
+            "lora_rank": 12, # 16
+            "learning_rate": 0.0002,
             "batch_size": 1,
-            "resolution": "512,768,1024",
+            "resolution": "512,768", #1024
             
             # We have our own captions, so disable autocaption
             "autocaption": False,
@@ -54,7 +54,7 @@ def train_flux_lora():
             
             # HuggingFace integration (if token provided)
             "hf_token": config.get("huggingface_token"),
-            "hf_repo_id": "Guido/cartoon-flux",
+            "hf_repo_id": "Guido/cartoon-flux-3",
             
             # Performance settings
             "cache_latents_to_disk": False,
@@ -74,10 +74,10 @@ def train_flux_lora():
     print("\nIMPORTANT: The training will continue on Replicate's servers.")
     print("Visit the URL above to monitor progress and get the results.")
     print("\nTraining parameters:")
-    print(f"- Model destination: guidosalimbeni/cartoon-flux")
-    print(f"- Trigger word: CRTFLX01")
+    print(f"- Model destination: guidosalimbeni/cartoon-flux-3")
+    print(f"- Trigger word: CRTFLX03")
     print(f"- Training steps: 1000")
-    print(f"- LoRA rank: 16")
+    print(f"- LoRA rank: 12")
 
 if __name__ == "__main__":
     train_flux_lora()

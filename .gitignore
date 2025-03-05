@@ -2,6 +2,7 @@
 .env
 fine_tuning/data/ballerina
 fine_tuning/data/cartoon
+fine_tuning/data/cartoon_drawing
 fine_tuning/src/config.json
 .DS_Store
 .DS_Store

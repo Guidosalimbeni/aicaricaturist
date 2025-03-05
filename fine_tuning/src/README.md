@@ -102,3 +102,20 @@ Required packages are listed in the root requirements.txt:
 - Pillow
 - numpy
 - tqdm
+
+### prediction
+
+import Replicate from "replicate";
+
+const replicate = new Replicate({
+auth: process.env.REPLICATE_API_TOKEN,
+});
+
+const output = await replicate.run(
+"guidosalimbeni/cartoon-flux-2:1fe063aab167758c14fab9bdef9f4f67a1721e30718caa31429b6ff7f4aed666",
+{
+input: {
+prompt: "..."
+}
+}
+);
